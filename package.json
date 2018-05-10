@@ -1,0 +1,25 @@
+{
+  "name": "sensorhub",
+  "version": "1.0.0",
+  "description": "Mam-based sensor-monitoring for the internet of things.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rckey/SensorHub.git"
+  },
+  "author": "rck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rckey/SensorHub/issues"
+  },
+  "homepage": "https://github.com/rckey/SensorHub#readme",
+  "devDependencies": {
+    "electron": "^2.0.0"
+  },
+  "dependencies": {
+    "iota.lib.js": "^0.4.7"
+  }
+}
