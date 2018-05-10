@@ -1,7 +1,7 @@
 # SensorHub
 [MaM](https://blog.iota.org/introducing-masked-authenticated-messaging-e55c1822d50e)-based sensor-monitoring for the internet of things.
 
-###Installation:
+## Installation:
 
 ```
 cd /SensorHub
