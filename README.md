@@ -1,9 +1,7 @@
 # SensorHub
 [MaM](https://blog.iota.org/introducing-masked-authenticated-messaging-e55c1822d50e)-based sensor-monitoring for the internet of things.
 
-<img src="..."/>
-
-(*Image by [Wyn Tiedmers](https://www.wynt.de/)*)
+<img src="https://i.imgur.com/ti0hKg2.png"/>
 
 ### Installation:
 
