@@ -13,11 +13,13 @@
       <div class="header">
 
         <div style="position: absolute; top: 0; left: 0; width: 210px;">
-          <img src="./includes/media/logo_bold.png" height="45px" style="display: block; margin: auto; padding: 7px;"/>
+          <img src="./includes/media/logo_bold.png" width="180px" style="display: block; margin: auto; padding-top: 6px;"/>
         </div>
 
-        <input id="quickAdd" style="float: left; width: calc(100% - 170px);" type="text" class="form-control" placeholder="ROOT:" value="KLNVVVOCZTOOSNY9JZEVXCXY9KFYDB9OPGVPAINSDLZGSIVONUDECBFU9CUYXJOAIVUASVSQLDHXXNULR">
-        <div style="position: absolute; top: 16px; right: 10px;">
+
+        <input id="quickAdd" style="float: left; width: calc(100% - 170px);" type="text" class="form-control" placeholder="Paste your root here:" value="">
+
+        <div style="position: absolute; top: 15px; right: 10px;">
           IRI: <span class="label label-primary">1.4.2.1</span>&nbsp
           Sync: <span class="label label-primary">Yes</span>
         </div>
@@ -29,24 +31,62 @@
 
         <div id="map" style="position: absolute; top: 50px; left: 0px; height: calc(100% - 50px); width: 100%"></div>
 
-        <div id="debug" style="position: absolute; padding:10px; top: 100px; bottom: 100px; right: 20px; width: 300px; box-shadow: 0px 0px 15px #b3b3b3; background: #fcfcfc; color: #191f2d;">
-          <div style="position: relative; height: 50px; width: 100%; padding: 5px; margin-top: 10px; text-align: center;"><h4 id="title">Select a stream.</h4></div>
+        <div id="debug" style="position: absolute; padding:10px; top: 100px; bottom: 100px; right: 20px; width: 300px; border-radius: 5px; box-shadow: 0px 0px 10px #b3b3b3; background: #fcfcfc; color: #191f2d;">
+          <div style="position: relative; width: 100%; padding: 5px; margin-top: 10px; text-align: center;"><h4 id="title">Select a stream.</h4></div>
+          <div style="position: relative; width: 100%; padding: 5px; text-align: center;"><h6 id="loc"></h6></div>
+
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-xs-6" style="text-align: center;"><h4>Temperature:</h4><h5 id="temp"></h5></div>
+            <div class="col-xs-6" id="temp_ctx"></div>
+          </div>
           <hr>
-          <div style="position: relative; height: 20px; width: 100%; padding: 5px; margin-top: 10px; text-align: center;"><h6 id="loc"></h6></div>
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-xs-6" style="text-align: center;"><h4>Pressure:</h4><h5 id="press"></h5></div>
+            <div class="col-xs-6" id="press_ctx"></div>
+          </div>
+          <hr>
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-xs-6" style="text-align: center;"><h4>Humidity:</h4><h5 id="hum"></h5></div>
+            <div class="col-xs-6" id="hum_ctx"></div>
+          </div>
+          <hr>
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-xs-6" style="text-align: center;"><h4>Gas:</h4><h5 id="gas"></h5></div>
+            <div class="col-xs-6" id="gas_ctx"></div>
+          </div>
+          <hr>
 
-          <div style="position: relative; height: 50px; width: 100%; padding: 5px; margin-top: 20px; text-align: center;"><h4>Temperature:</h4><h5 id="temp"></h5></div>
-          <div style="position: relative; height: 50px; width: 100%; padding: 5px; margin-top: 20px; text-align: center;"><h4>Pressure:</h4><h5 id="press"></h5></div>
-          <div style="position: relative; height: 50px; width: 100%; padding: 5px; margin-top: 20px; text-align: center;"><h4>Humidity:</h4><h5 id="hum"></h5></div>
-          <div style="position: relative; height: 50px; width: 100%; padding: 5px; margin-top: 20px; text-align: center;"><h4>Gas:</h4><h5 id="gas"></h5></div>
 
-          <div style="position: absolute; width: 100%; padding: 5px; bottom:30px; text-align: center;"><h5><a href="#">History</a></h5></div>
+          <div style="position: absolute; width: 100%; padding: 5px; bottom:30px; text-align: center;">
+            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#history">History</button>
+          </div>
 
         </div>
+
+<!-- Modal -->
+ <div class="modal fade" id="history" role="dialog">
+   <div class="modal-dialog modal-md">
+     <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal">&times;</button>
+         <h4 class="modal-title" id="history_title"></h4>
+       </div>
+       <div class="modal-body">
+         <div id="history_table" style="color: #191f2d"></div>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
 
 
         <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
         <script src="./includes/js/jquery-3.2.1.min.js"></script>
         <script src="./includes/js/bootstrap.min.js"></script>
+        <script src="./includes/js/Chart.min.js"></script>
         <script src="./scripts/index.js"></script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5jCj94AqW-ktmNWsYe0tNgj0Q4MX4xcM&callback=init"></script>
         <script>if (window.module) module = window.module;</script>

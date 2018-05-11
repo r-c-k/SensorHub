@@ -1,10 +1,11 @@
 const {ipcRenderer} = require('electron');
 const STREAM = require('./classes/stream');
-const DATASET = require('./classes/dataset');
 
 let streams = [];
-let selected = null;
+let selected;
 let map;
+
+let running = false;
 
 function init() {
 
@@ -16,17 +17,17 @@ function init() {
   });
 
   /* prototyping */
-  if (streams.length == 0) {
-    let ROOTS = ['KZABFGSHAVFQVTWAETNKXSLTIIHKTLIWKILGCCVXHHAMBTOHGWI9ZQKWZCBYUFAXVTYMATNWDSKVMDUXG',
-                  'YFWBLCWISCETHIWPQXLICUPRNHSKUKUUCTLW9ZDRYLXALEGVQYEOCHQWZFMNWJPWAVPBRGUSCWKLHLJTX',
-                    'FI99UEVFYDEYNJORHPZBWEWLHVE9OSMCXZVUZAGNFZJWOEMOCORUNACHWJTRIOSEDOVIHXOQACHNPLJCP']
+  /*
+    let ROOTS = ['NQQJGLSDHCPNRNZXNOKEOFL9OBYRIPKY9RBWUPBXGDMAOHZCYPOOUPKNKZVPHXAFLZAUYCUTEZAT9XFOC',
+                  'RGWHXSDJIGGRFPEWBPICCLLLDVUMWGUXGLZZKECPFFYIACTGVVGUIAYDUGZDKFKSEJJUFVNXKRYPCWHIX',
+                   'TRUAYCTIN9HAOXRLWQDGVLWEKMRHXIACVPPLWPTJHCULEUWUYSOTTHN9HKALHRUTSDBMGCRJ9PUOFHVWU']
 
     ROOTS.forEach(root => {
       addStream(root);
     })
 
     fetchStream(0);
-  }
+    */
 }
 
 $("#quickAdd").keypress(function (_e) {
@@ -34,8 +35,6 @@ $("#quickAdd").keypress(function (_e) {
 
     addStream(_e.target.value);
     _e.target.value = '';
-
-    //fetchStream(0);
   }
 });
 
@@ -43,28 +42,42 @@ ipcRenderer.on('setRoot', (event, id, _newRoot) => {
 
   streams[id].root = _newRoot;
   /* next stream */
-  setTimeout(fetchStream, 500, id+1);
+  setTimeout(fetchStream, 1000, ++id);
 });
 
 ipcRenderer.on('fetchPacket', (event, _packet, id) => {
 
-  if (streams[id].location == null) {
-    let location = {lat: _packet.location.lat, lng: _packet.location.lng};
-    var marker = new google.maps.Marker({
-      position: location,
-      map: map,
-      draggable: true,
-      animation: google.maps.Animation.DROP
-    });
+  if (streams[id].id == '') {
 
-    selected = id;
+    $('#temp_ctx').children().hide();
+    $('#press_ctx').children().hide();
+    $('#hum_ctx').children().hide();
+    $('#gas_ctx').children().hide();
+
+    $('#temp_ctx').append('<canvas id="' + streams[id].firstRoot + '_temperature_ctx"></canvas>');
+    $('#press_ctx').append('<canvas id="' + streams[id].firstRoot + '_pressure_ctx"></canvas>');
+    $('#hum_ctx').append('<canvas id="' + streams[id].firstRoot + '_humidity_ctx"></canvas>');
+    $('#gas_ctx').append('<canvas id="' + streams[id].firstRoot + '_gasResistance_ctx"></canvas>');
   }
 
   $('#' + streams[id].streamLabel).html(_packet.id);
   streams[id].id = _packet.id;
-  streams[id].location = {lat: _packet.location.lat, lng: _packet.location.lng}
+
+  let location = {lat: _packet.location.lat, lng: _packet.location.lng};
+  streams[id].location = location;
+  streams[id].marker.setPosition(location);
+
   streams[id].lastUpdate = _packet.timestamp;
-  streams[id].data = _packet.data;
+
+  /* for prototyping */
+  let d1 = {'temperature': _packet.data[0].temperature}
+  streams[id].addData(d1, _packet.timestamp);
+  let d2 = {'pressure': _packet.data[0].pressure}
+  streams[id].addData(d2, _packet.timestamp);
+  let d3 = {'humidity': _packet.data[0].humidity}
+  streams[id].addData(d3, _packet.timestamp);
+  let d4 = {'gasResistance': _packet.data[0].gasResistance}
+  streams[id].addData(d4, _packet.timestamp);
 
   if (selected != null && selected == id) {
     select(id);
@@ -73,9 +86,7 @@ ipcRenderer.on('fetchPacket', (event, _packet, id) => {
 
 function fetchStream (id) {
 
-  if (id > streams.length - 1) {
-    id = 0;
-  }
+  id = id > streams.length - 1 ? 0 : id;
 
   highlight(id);
   ipcRenderer.send('fetchRoot', streams[id].root, id);
@@ -101,6 +112,13 @@ function addStream (root) {
   streams.push(s);
 
   $('#stream_nav').append('<div class="stream_label" id="label_' + id + '" onclick="select(' + id + ');">' + '<h5 id="' + s.streamLabel+ '">...' + '</h5><span id="sync_indicator_' + id + '" class="label label-white">< 10 sec<span></div>');
+
+  selected = id;
+
+  if (running == false) {
+    running = true;
+    fetchStream(0);
+  }
 }
 
 function map_panTo (location) {
@@ -109,15 +127,46 @@ function map_panTo (location) {
 
 function debug () {
 
- if (streams[selected].data[0] == undefined)
+ if (streams[selected].datasets == undefined)
   return;
 
+  let data = streams[selected].datasets;
+
+
+  // SET OUTPUT
+
   $('#title').text(streams[selected].id);
-  $('#loc').text('Lat: ' + streams[selected].location.lat + ' Long: ' + streams[selected].location.lng);
-  $('#temp').text(streams[selected].data[0].temperature);
-  $('#press').text(streams[selected].data[0].pressure);
-  $('#hum').text(streams[selected].data[0].humidity);
-  $('#gas').text(streams[selected].data[0].gasResistance);
+  $('#loc').text('Lat: ' + streams[selected].location.lat + ' Lng: ' + streams[selected].location.lng);
+  $('#temp').text(data.temperature[data.temperature.length - 1]);
+  $('#press').text(data.pressure[data.pressure.length - 1]);
+  $('#hum').text(data.humidity[data.humidity.length - 1]);
+  $('#gas').text(data.gasResistance[data.gasResistance.length - 1]);
+
+
+  // SET CHARTS
+
+  $('#temp_ctx').children().hide();
+  $('#press_ctx').children().hide();
+  $('#hum_ctx').children().hide();
+  $('#gas_ctx').children().hide();
+
+  $('#' + streams[selected].firstRoot + '_temperature_ctx').show();
+  $('#' + streams[selected].firstRoot + '_pressure_ctx').show();
+  $('#' + streams[selected].firstRoot + '_humidity_ctx').show();
+  $('#' + streams[selected].firstRoot + '_gasResistance_ctx').show();
+
+
+  //SET HISTORY
+
+  $('#history_title').html(streams[selected].id);
+  $('#history_table').html('');
+
+  Object.keys(data).forEach(function (key) {
+    $('#history_table').append('<h4>' + key + ':</h4></br>');
+    data[key].forEach(function (value) {
+      $('#history_table').append('&nbsp&nbsp&nbsp&nbsp' + value + '</br>');
+    })
+});
 }
 
 function highlight (id) {

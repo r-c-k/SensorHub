@@ -50,7 +50,7 @@ const IOTA = require('iota.lib.js');
 const MAM = require('mam.node.js');
 
 iota = new IOTA({
-    'host': 'http://173.212.218.8',
+    'host': 'http://178.238.237.200',
     'port': 14265
 });
 

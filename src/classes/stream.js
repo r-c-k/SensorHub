@@ -2,35 +2,93 @@ class STREAM {
 
   constructor (_root) {
 
+    this.firstRoot = _root;
     this.root = _root;
 
     this.streamLabel = '';
 
     this.id = '';
-    this.location = null;
+
+    this.location = {};
+    this.marker = new google.maps.Marker({
+      map: map,
+      draggable: true,
+      animation: google.maps.Animation.DROP
+    });;
+
     this.lastUpdate = Date.now();
 
-    //tmp
-    this.data = '';
-    this.dataset = [];
-
-    let d = new DATASET();
-    this.dataset.push(d);
+    this.datasets = {};
+    this.charts = {};
   }
 
-  //#############################################
-  //##                 HELPER                  ##
-  //#############################################
+  addData (_obj, _timestamp) {
 
-  generateSeed () {
 
-   var seed = "";
-   var trytes = "ABCDEFGHIJKLMNOPQRSTUVWXYZ9";
+    let key = Object.keys(_obj)[0];
+    let value = Object.values(_obj)[0];
 
-   for (var i = 0; i < 81; i++)
-     seed += trytes.charAt(Math.floor(Math.random() * trytes.length));
+    if (this.datasets[key] != undefined) {
 
-   return seed;
+      // add value to known key
+      this.datasets[key].push(value);
+    } else {
+
+      // add new key-value pair
+      this.datasets[key] = [value];
+
+      // context for chart
+      let context = document.getElementById(this.root + '_' + key + '_ctx').getContext('2d');
+      this.charts[key] = this.newChart(context);
+    }
+
+    // update the chart
+    this.updateChart(this.charts[key], _timestamp, parseFloat(value));
+  }
+
+  newChart (_context) {
+
+    let chart = new Chart(_context, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+              data: [],
+              backgroundColor: [
+                    'rgb(118, 177, 226)'
+                ]
+            }]
+        },
+        options: {
+          tooltips: {
+            enabled: false
+          },
+          legend: {
+            display: false
+          },
+          scales: {
+            xAxes: [{
+              display: false
+            }],
+            yAxes: [{
+              display: false,
+              ticks: {
+                    beginAtZero:true
+                }
+            }]
+          }
+        }
+    });
+
+    return chart;
+  }
+
+  updateChart (_chart, _label, _data) {
+    _chart.data.labels.push(_label);
+    _chart.data.datasets.forEach((_ds) => {
+        _ds.data.push(_data);
+    });
+    _chart.update();
   }
 
 }
