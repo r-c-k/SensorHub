@@ -5,13 +5,17 @@
     background: #181926;
     color: #bec6d7;
 
-    // overflow: hidden;
+    overflow: hidden;
   }
 
   input[type="text"],
   select.form-control {
     height: 30px;
     margin:auto;
+    margin-left: 200px;
+    float: left;
+    width: calc(100% - 360px);
+
     color: #86899e;
     border: none;
     background: #32354d;
@@ -19,9 +23,8 @@
 
   .header {
     height: 50px;
-    width: calc(100%);
+    width: 100%;
     padding: 8px;
-    padding-left: 210px;
     border-bottom: 4px solid #428bca;
 
     border-top-width: 0;
@@ -51,24 +54,31 @@
     background: #bec6d7;
   }
 
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   .stream_label {
     position: relative;
     height: 40px;
+    max-width: 130px;
     padding: 3px;
     margin-bottom: 7px;
     text-align: center;
     border-radius: 5px;
-    color: #fff;
-    background: #1b1c2d;
+    color: #d9d4d4;
+    background: #35374f;
 
     box-shadow: 0px 0px 10px #a2a2a2;
   }
 
   .stream_label:hover {
+    color: #fff;
     background: #2e3041;
   }
 
   .stream_label.active {
+    color: #fff;
     background: #428bca;
   }
 

@@ -17,7 +17,7 @@
         </div>
 
 
-        <input id="quickAdd" style="float: left; width: calc(100% - 170px);" type="text" class="form-control" placeholder="Paste your root here:" value="">
+        <input id="quickAdd" type="text" class="form-control" placeholder="Paste your root here:" value="">
 
         <div style="position: absolute; top: 15px; right: 10px;">
           IRI: <span class="label label-primary">1.4.2.1</span>&nbsp
@@ -25,13 +25,14 @@
         </div>
       </div>
 
-        <div id="stream_nav" style="z-index: 10; position: absolute; left: 10px; top: 60px; height: calc(100% - 70px); width: 150px;">
+        <div id="stream_nav" style="z-index: 10; position: absolute; left: 30px; top: 50px; width: 170px; height: calc(100% - 50px); overflow: auto; overflow-x: hidden;">
+          <div id="ghost" style="height: 30px;"></div>
         </div>
 
 
         <div id="map" style="position: absolute; top: 50px; left: 0px; height: calc(100% - 50px); width: 100%"></div>
 
-        <div id="debug" style="position: absolute; padding:10px; top: 100px; bottom: 100px; right: 20px; width: 300px; border-radius: 5px; box-shadow: 0px 0px 10px #b3b3b3; background: #fcfcfc; color: #191f2d;">
+        <div id="debug" style="position: absolute; padding:10px; top: 80px; height: auto; right: 30px; width: 280px; border-radius: 5px; box-shadow: 0px 0px 10px #b3b3b3; background: #fcfcfc; color: #191f2d;">
           <div style="position: relative; width: 100%; padding: 5px; margin-top: 10px; text-align: center;"><h4 id="title">Select a stream.</h4></div>
           <div style="position: relative; width: 100%; padding: 5px; text-align: center;"><h6 id="loc"></h6></div>
 
@@ -57,8 +58,9 @@
           <hr>
 
 
-          <div style="position: absolute; width: 100%; padding: 5px; bottom:30px; text-align: center;">
-            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#history">History</button>
+          <div style="position: relative; width: 100%; margin-top: 40px; margin-bottom: 20px; text-align: center;">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#history">Show history</button>
+            <button type="button" class="btn btn-danger">Delete</button>
           </div>
 
         </div>
