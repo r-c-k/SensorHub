@@ -70,13 +70,13 @@ ipcRenderer.on('fetchPacket', (event, _packet, id) => {
   streams[id].lastUpdate = _packet.timestamp;
 
   /* for prototyping */
-  let d1 = {'temperature': _packet.data[0].temperature}
+  let d1 = {'temperature': _packet.data.temperature}
   streams[id].addData(d1, _packet.timestamp);
-  let d2 = {'pressure': _packet.data[0].pressure}
+  let d2 = {'pressure': _packet.data.pressure}
   streams[id].addData(d2, _packet.timestamp);
-  let d3 = {'humidity': _packet.data[0].humidity}
+  let d3 = {'humidity': _packet.data.humidity}
   streams[id].addData(d3, _packet.timestamp);
-  let d4 = {'gasResistance': _packet.data[0].gasResistance}
+  let d4 = {'gasResistance': _packet.data.gasResistance}
   streams[id].addData(d4, _packet.timestamp);
 
   if (selected != null && selected == id) {
