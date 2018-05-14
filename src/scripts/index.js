@@ -25,8 +25,12 @@ function init() {
             },
             {
               featureType: 'poi',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#293342'}]
+              elementType: 'labels.icon',
+              stylers: [{visibility: 'off'}]
+            },
+            {
+              featureType: 'poi.business',
+              stylers: [{visibility: 'off'}]
             },
             {
               featureType: 'poi.park',
@@ -51,12 +55,12 @@ function init() {
             {
               featureType: 'road',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#9ca5b3'}]
+              stylers: [{color: '#6b7380'}]
             },
             {
               featureType: 'road.highway',
               elementType: 'geometry',
-              stylers: [{color: '#746855'}]
+              stylers: [{color: '#81786b'}]
             },
             {
               featureType: 'road.highway',
@@ -66,12 +70,12 @@ function init() {
             {
               featureType: 'road.highway',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#f3d19c'}]
+              stylers: [{color: '#ffe4b9'}]
             },
             {
               featureType: 'transit',
-              elementType: 'geometry',
-              stylers: [{color: '#2f3948'}]
+              elementType: 'labels.icon',
+              stylers: [{visibility: 'off'}]
             },
             {
               featureType: 'transit.station',
