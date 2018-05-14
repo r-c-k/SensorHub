@@ -13,7 +13,8 @@ class STREAM {
     this.marker = new google.maps.Marker({
       map: map,
       draggable: true,
-      animation: google.maps.Animation.DROP
+      animation: google.maps.Animation.DROP,
+      icon: './includes/media/marker.png'
     });;
 
     this.lastUpdate = Date.now();
