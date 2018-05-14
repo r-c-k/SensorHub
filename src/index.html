@@ -17,7 +17,7 @@
         </div>
 
 
-        <input id="quickAdd" type="text" class="form-control" placeholder="Paste your root here:" value="">
+        <input id="stream_add" type="text" class="form-control" placeholder="Paste your root here:" autofocus>
 
         <div style="position: absolute; top: 15px; right: 10px;">
           IRI: <span class="label label-primary">1.4.2.1</span>&nbsp
@@ -25,15 +25,16 @@
         </div>
       </div>
 
-        <div id="stream_nav" style="z-index: 10; position: absolute; left: 30px; top: 50px; width: 170px; height: calc(100% - 50px); overflow: auto; overflow-x: hidden;">
+        <div id="stream_feed">
           <div id="ghost" style="height: 30px;"></div>
         </div>
 
 
-        <div id="map" style="position: absolute; top: 50px; left: 0px; height: calc(100% - 50px); width: 100%"></div>
+        <div id="map"></div>
 
-        <div id="debug" style="position: absolute; padding:10px; top: 80px; height: auto; right: 30px; width: 280px; border-radius: 5px; box-shadow: 0px 0px 10px #b3b3b3; background: #fcfcfc; color: #191f2d;">
-          <div style="position: relative; width: 100%; padding: 5px; margin-top: 10px; text-align: center;"><h4 id="title">Select a stream.</h4></div>
+
+        <div id="stream_data">
+          <div style="position: relative; width: 100%; padding: 5px; text-align: center; margin-top: 10px; "><h4 id="title">Select a stream.</h4></div>
           <div style="position: relative; width: 100%; padding: 5px; text-align: center;"><h6 id="loc"></h6></div>
 
           <div class="row" style="margin-top: 20px;">
@@ -58,31 +59,31 @@
           <hr>
 
 
-          <div style="position: relative; width: 100%; margin-top: 40px; margin-bottom: 20px; text-align: center;">
+          <div id="stream_data_control">
             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#history">Show history</button>
             <button type="button" class="btn btn-danger">Delete</button>
           </div>
 
         </div>
 
-<!-- Modal -->
- <div class="modal fade" id="history" role="dialog">
-   <div class="modal-dialog modal-md">
-     <div class="modal-content">
-       <div class="modal-header">
-         <button type="button" class="close" data-dismiss="modal">&times;</button>
-         <h4 class="modal-title" id="history_title"></h4>
+      <!-- Modal -->
+       <div class="modal fade" id="history" role="dialog">
+         <div class="modal-dialog modal-md">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title" id="history_title"></h4>
+             </div>
+             <div class="modal-body">
+               <div id="history_table" style="color: #191f2d"></div>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+             </div>
+           </div>
+         </div>
        </div>
-       <div class="modal-body">
-         <div id="history_table" style="color: #191f2d"></div>
-       </div>
-       <div class="modal-footer">
-         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-       </div>
-     </div>
-   </div>
- </div>
-</div>
+      </div>
 
 
         <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>

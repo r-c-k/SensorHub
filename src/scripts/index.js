@@ -30,7 +30,7 @@ function init() {
     */
 }
 
-$("#quickAdd").keypress(function (_e) {
+$("#stream_add").keypress(function (_e) {
   if (_e.which === 13 && _e.target.value != '') {
 
     addStream(_e.target.value);
@@ -94,7 +94,7 @@ function fetchStream (id) {
 
 function select (id) {
 
-  $('#stream_nav > div').each(function () {
+  $('#stream_feed > div').each(function () {
     $(this).removeClass('active');
   });
 
@@ -111,7 +111,7 @@ function addStream (root) {
   s.streamLabel= 'label_' + id + '_title';
   streams.push(s);
 
-  $('#stream_nav').append('<div class="stream_label" id="label_' + id + '" onclick="select(' + id + ');">' + '<h5 id="' + s.streamLabel+ '">...' + '</h5><span id="sync_indicator_' + id + '" class="label label-white">< 10 sec<span></div>');
+  $('#stream_feed').append('<div class="stream_label" id="label_' + id + '" onclick="select(' + id + ');">' + '<h5 id="' + s.streamLabel+ '">...' + '</h5><span id="sync_indicator_' + id + '" class="label label-white">< 10 sec<span></div>');
 
   selected = id;
 
@@ -171,7 +171,7 @@ function debug () {
 
 function highlight (id) {
 
-  $('#stream_nav > div > span').each(function () {
+  $('#stream_feed > div > span').each(function () {
     $(this).removeClass('highlight');
   });
 

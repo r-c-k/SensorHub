@@ -58,6 +58,46 @@
     display: none;
   }
 
+  #map {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    height: calc(100% - 50px);
+    width: 100%;
+  }
+
+  #stream_data {
+    position: absolute;
+    padding:10px;
+    top: 80px;
+    height: auto;
+    right: 30px;
+    width: 280px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #b3b3b3;
+    background: #fcfcfc;
+    color: #191f2d;
+  }
+
+  #stream_data_control {
+    position: relative;
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  #stream_feed {
+    position: absolute;
+    z-index: 10;
+    left: 30px;
+    top: 50px;
+    width: 170px;
+    height: calc(100% - 50px);
+    overflow: auto;
+    overflow-x: hidden;
+  }
+
   .stream_label {
     position: relative;
     height: 40px;
