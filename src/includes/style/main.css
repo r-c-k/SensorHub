@@ -49,6 +49,10 @@
     border-top: 1px solid #d9d5d5;
   }
 
+  .label-primary {
+    background: #0096bf;
+  }
+
   .label-white {
     color: #2c3344;
     background: #bec6d7;
@@ -107,7 +111,7 @@
     text-align: center;
     border: 1px solid #2c2f47;
     border-radius: 5px;
-    color: #d9d4d4;
+    color: #e3e3e3;
     background: #35374f;
   }
 
@@ -118,7 +122,7 @@
 
   .stream_label.active {
     color: #fff;
-    background: #428bca;
+    background: #0096bf;
   }
 
   .highlight {

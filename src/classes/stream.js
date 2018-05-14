@@ -56,7 +56,7 @@ class STREAM {
             datasets: [{
               data: [],
               backgroundColor: [
-                    'rgb(118, 177, 226)'
+                    'rgb(4, 163, 207)'
                 ]
             }]
         },
