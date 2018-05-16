@@ -3,6 +3,11 @@
 
 <img src="https://i.imgur.com/eMwPcI3.png"/>
 
+### Disclaimer:
+
+This is a barely tested, barely commented, poc-prototype-piece-of-software yet. Use at own risk!
+Feel free to contact me for any kind of suggestions though.
+
 ### Installation:
 
 Clone this repository:

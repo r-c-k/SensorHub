@@ -1,5 +1,6 @@
 const {ipcRenderer} = require('electron');
 const STREAM = require('./classes/stream');
+const MAPSTYLE = require('./includes/style/map');
 
 let streams = [];
 let selected;
@@ -14,90 +15,7 @@ function init() {
     zoom: 15,
     center: location,
     disableDefaultUI: true,
-    styles: [
-            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-            {
-              featureType: 'administrative.locality',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#2a3545'}]
-            },
-            {
-              featureType: 'poi',
-              elementType: 'labels.icon',
-              stylers: [{visibility: 'off'}]
-            },
-            {
-              featureType: 'poi.business',
-              stylers: [{visibility: 'off'}]
-            },
-            {
-              featureType: 'poi.park',
-              elementType: 'geometry',
-              stylers: [{color: '#263c3f'}]
-            },
-            {
-              featureType: 'poi.park',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#6b9a76'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'geometry',
-              stylers: [{color: '#38414e'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#212a37'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#6b7380'}]
-            },
-            {
-              featureType: 'road.highway',
-              elementType: 'geometry',
-              stylers: [{color: '#81786b'}]
-            },
-            {
-              featureType: 'road.highway',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#1f2835'}]
-            },
-            {
-              featureType: 'road.highway',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#ffe4b9'}]
-            },
-            {
-              featureType: 'transit',
-              elementType: 'labels.icon',
-              stylers: [{visibility: 'off'}]
-            },
-            {
-              featureType: 'transit.station',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'geometry',
-              stylers: [{color: '#17263c'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#515c6d'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'labels.text.stroke',
-              stylers: [{color: '#17263c'}]
-            }
-          ]
+    styles: MAPSTYLE
   });
 
   /* prototyping */
@@ -113,6 +31,11 @@ function init() {
     fetchStream(0);
     */
 }
+
+ipcRenderer.on('nodeInfo', (event, packet) => {
+  $("#iriVersion").html(packet.appVersion);
+  $("#syncState").html(Math.abs(packet.latestSolidSubtangleMilestoneIndex - packet.latestMilestoneIndex) < 5 ? 'Yes' : 'No');
+});
 
 $("#stream_add").keypress(function (_e) {
   if (_e.which === 13 && _e.target.value != '') {
@@ -186,7 +109,7 @@ function select (id) {
   selected = id;
 
   map_panTo(streams[id].location);
-  debug();
+  output();
 }
 
 function addStream (root) {
@@ -195,7 +118,12 @@ function addStream (root) {
   s.streamLabel= 'label_' + id + '_title';
   streams.push(s);
 
-  $('#stream_feed').append('<div class="stream_label" id="label_' + id + '" onclick="select(' + id + ');">' + '<h5 id="' + s.streamLabel+ '">...' + '</h5><span id="sync_indicator_' + id + '" class="label label-white">< 10 sec<span></div>');
+  let new_label = '<div class="stream_label" id="label_'
+  + id + '" onclick="select(' + id + ');">' + '<h5 id="'
+  + s.streamLabel+ '">...' + '</h5><span id="sync_indicator_'
+  + id + '" class="label label-white">< 10 sec<span></div>';
+
+  $('#stream_feed').append(new_label);
 
   selected = id;
 
@@ -209,7 +137,7 @@ function map_panTo (location) {
   map.panTo(location);
 }
 
-function debug () {
+function output () {
 
  if (streams[selected].datasets == undefined)
   return;

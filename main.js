@@ -6,12 +6,11 @@ const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 const url = require('url');
 
-
 let window;
 
 function createWindow () {
 
-  window = new BrowserWindow({width: 1200, height: 720})
+  window = new BrowserWindow({width: 1200, height: 720, show: false})
 
   window.loadURL(url.format({
     pathname: path.join(__dirname, '/src/index.html'),
@@ -19,25 +18,31 @@ function createWindow () {
     slashes: true
   }))
 
+  window.once('ready-to-show', function() {
+    getNodeInfo();
+    window.show();
+  });
+
   window.setMenu(null);
-  //window.webContents.openDevTools()
+  //window.webContents.openDevTools();
 
   window.on('closed', () => {
-    window = null
+    window = null;
   })
+
 }
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
 })
 
 app.on('activate', () => {
   if (win === null) {
-    createWindow()
+    createWindow();
   }
 })
 
@@ -80,4 +85,19 @@ const execute = async () => {
 const logData = p => {
   packet = JSON.parse(iota.utils.fromTrytes(p));
   window.webContents.send('fetchPacket', packet, streamIndex);
+}
+
+//#############################################
+//##                 API LOGIC               ##
+//#############################################
+
+function getNodeInfo () {
+
+  iota.api.getNodeInfo(function(err, result) {
+    if (!err) {
+      window.webContents.send('nodeInfo', result);
+    }
+
+  })
+
 }
