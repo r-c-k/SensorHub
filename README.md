@@ -34,4 +34,3 @@ Run [SensorNode](https://github.com/rckey/SensorNode) to generate own streams.
 
 IOTA: OZPVZDEHSIOJXVVPYKKR9DQVGKXOLIAAMDAEREMQLDYMVOAGBAKC9CMKBRZAAWLMYQCNCPEIPYQBZMUSDODQVGPLDW
 
-<img src="https://cdn.tngl.me/rck/donation/qr.svg" alt="donation@rck" />
