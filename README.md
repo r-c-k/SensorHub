@@ -29,8 +29,3 @@ git clone https://github.com/rckey/mam.node.js
 Run with ``` npm start ```
 
 Run [SensorNode](https://github.com/rckey/SensorNode) to generate own streams.
-
-## You want to donate?
-
-IOTA: OZPVZDEHSIOJXVVPYKKR9DQVGKXOLIAAMDAEREMQLDYMVOAGBAKC9CMKBRZAAWLMYQCNCPEIPYQBZMUSDODQVGPLDW
-
