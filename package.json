@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/rckey/SensorHub#readme",
   "devDependencies": {
-    "electron": "^2.0.0"
+    "electron": "^15.5.5"
   },
   "dependencies": {
     "iota.lib.js": "^0.4.7"
